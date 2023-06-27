@@ -1,12 +1,17 @@
 from main import Entity
 class Customer(Entity):
-    def __init__(self, name, Id, address, phon, email, gender,
+    customers_id = 1
+
+    def __init__(self, name, Id, address, phone, email, gender,
                  age=0, height=0, weight=0):
-        super.__init__(Customer)
+        super().__init__(name, Id, address, phone, email)
         self.__age = 0
         self.__height = 0
         self.__weight = 0
         self.__gender = gender
+        self.__customer_id = Customer.customers_id
+        Customer.customers_id += 1
+
 
 
     @property
@@ -45,6 +50,18 @@ class Customer(Entity):
         print('this is a gender setter')
         self.__gender = new_gender
 
-# def main():
-#     if __name__ == '__main__':
-#         Alecs = Customer()
+    @property
+    def customer_id(self):
+        return self.__customer_id
+
+
+
+    def peint(self):
+        super.print_data(), print(self.gender, self.age, self.height, self.weight)
+
+def main():
+    if __name__ == '__main__':
+        avi = Customer('Moshe', 200739977, 'yehoshua', '02523777', 'ksjdl@.com', 'mail')
+        print(avi.customer_id)
+
+main()

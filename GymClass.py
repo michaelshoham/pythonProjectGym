@@ -1,6 +1,6 @@
 from main import Entity
 class Gym(Entity):
-    def __init__(self, name, id, address, phon, email):
+    def __init__(self, name, id, address, phone, email):
 
         super().__init__(self)
 
