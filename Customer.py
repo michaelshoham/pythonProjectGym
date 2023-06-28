@@ -1,6 +1,7 @@
-from main import Entity
+from Entity import Entity
 class Customer(Entity):
     customers_id = 1
+
 
     def __init__(self, name, Id, address, phone, email, gender,
                  age=0, height=0, weight=0):
@@ -56,12 +57,8 @@ class Customer(Entity):
 
 
 
-    def peint(self):
+    def print(self):
         super.print_data(), print(self.gender, self.age, self.height, self.weight)
 
-def main():
-    if __name__ == '__main__':
-        avi = Customer('Moshe', 200739977, 'yehoshua', '02523777', 'ksjdl@.com', 'mail')
-        print(avi.customer_id)
 
-main()
+

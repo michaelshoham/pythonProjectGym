@@ -1,4 +1,4 @@
-from main import Entity
+from Entity import Entity
 class Gym(Entity):
     def __init__(self, name, id, address, phone, email):
 
