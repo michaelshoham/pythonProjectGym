@@ -1,8 +1,8 @@
 class Entity:
 
-    def __init__(self, name, id, address, phone, email):
+    def __init__(self, name, Id, address, phone, email):
         self.__name = name
-        self.__id = id
+        self.__id = Id
         self.__email = email
         self.__address = address
         self.__phone = phone
