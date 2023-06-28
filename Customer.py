@@ -12,6 +12,17 @@ class Customer(Entity):
         self.__gender = gender
         self.__customer_id = Customer.customers_id
         Customer.customers_id += 1
+        self.__payment_plan = ''
+
+
+    @property
+    def payment_plan(self):
+        return self.__payment_plan
+
+    @payment_plan.setter
+    def payment_plan(self, nwe_payment_plan):
+        print('this is a payment_plan setter')
+        self.__payment_plan = nwe_payment_plan
 
 
 
@@ -58,7 +69,7 @@ class Customer(Entity):
 
 
     def print(self):
-        super.print_data(), print(self.gender, self.age, self.height, self.weight)
+        super.print_data(), print(self.gender, self.age, self.height, self.weight, self.payment_plan)
 
 
 

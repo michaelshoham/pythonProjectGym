@@ -1,7 +1,6 @@
 from Entity import Entity
 class Gym(Entity):
     def __init__(self, name, id, address, phone, email):
-
         super().__init__(self)
 
         self.capacity = 20
