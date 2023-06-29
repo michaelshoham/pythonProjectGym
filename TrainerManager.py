@@ -38,7 +38,7 @@ class TreinerManager:
             print("ID already exists in the table.")
             return None
 
-    def display_customers(self):
+    def display_trainers(self):
         SQL3.display_records(self, 'TrainersGym')
 
 
@@ -62,7 +62,7 @@ class TreinerManager:
         print("Duplicate records removed.")
 
 
-    def get_customer_record(self, Id):
+    def get_trainer_record(self, Id):
         import sqlite3
         con = sqlite3.connect('Gym.db')
         cur = con.cursor()
@@ -71,7 +71,7 @@ class TreinerManager:
 
         return duplicate_ids
 
-    def remove_customer_record(self, Id):
+    def remove_trainer_record(self, Id):
         import sqlite3
         con = sqlite3.connect('Gym.db')
         cur = con.cursor()
