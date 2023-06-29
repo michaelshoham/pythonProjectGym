@@ -88,14 +88,37 @@ class CustomerManager:
         print("Duplicate records removed.")
 
 
+    def get_customer_record(self, Id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute("SELECT * FROM CustomersGym_nwe WHERE id = ?", (Id,))
+        duplicate_ids = cur.fetchall()
+
+        return duplicate_ids
+
+    def remove_customer_record(self, Id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute("SELECT * FROM CustomersGym_nwe WHERE id = ?", (Id,))
+
+        cur.execute("DELETE FROM CustomersGym_nwe WHERE id = ?", (Id,))
+        con.commit()
+        print("Record deleted successfully.")
+
+
+
 def main():
     if __name__ == '__main__':
         manager = CustomerManager()
-        manager.CreateTableCustomersGym()
-        print(manager.add_customer('omer', 200739977, 'ben nun 2', '0506857162', 'r6720441@mail.com,', 'mail'))
+        # manager.CreateTableCustomersGym()
+        # print(manager.add_customer('omer', 200739977, 'ben nun 2', '0506857162', 'r6720441@mail.com,', 'mail'))
+        # manager.display_customers()
+        # manager.check_id_exists(200739977)
+        # manager.remove_duplicate_records()
+        # print(manager.get_customer_record(200739977))
+        manager.remove_customer_record(200739977)
         manager.display_customers()
-        manager.check_id_exists(200739977)
-        manager.remove_duplicate_records()
-
 
 main()
