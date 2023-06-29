@@ -7,38 +7,115 @@ class SQL3:
         import sqlite3
         self.con = sqlite3.connect('Gym.db')
         self.cur = self.con.cursor()
-    def CreateTableCustomersGym(self):
+
+
+    def CreateTable(self, table, my_tuple):
+            import sqlite3
+            con = sqlite3.connect('Gym.db')
+            cur = con.cursor()
+
+            try:
+                cur.execute(f'CREATE TABLE {table} {my_tuple}')
+                con.commit()
+            except sqlite3.OperationalError as e:
+                print(e)
+
+
+    def check_id_exists(self, table, id):
         import sqlite3
-        try:
-            self.cur.execute('CREATE TABLE CustomersGym(name, Id, address, phone, email,'
-                             ' gender, age, height, weight, customer_id, payment_plan)')
-        except sqlite3.OperationalError:
-            print(sqlite3.OperationalError)
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"SELECT id FROM {table} WHERE id = ?", (id,))
+        row = cur.fetchone()
 
-    # def InsetIntoCustomersGym(self, name, Id, address, phone, email,
-    #                           gender, age, height, weight, customer_id, payment_plan):
+        if row is not None:
+            return True
+        else:
+            return False
+
+
+    def display_records(self, table):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"SELECT * FROM {table}")
+        rows = cur.fetchall()
+
+        for row in rows:
+            print(row)
+
+    def remove_duplicate_records(self, table):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"SELECT id, COUNT(*) FROM {table} GROUP BY id HAVING COUNT(*) > 1")
+        duplicate_ids = cur.fetchall()
+
+
+        cur.execute(f"""
+            DELETE FROM {table}
+            WHERE ROWID NOT IN (
+                SELECT MIN(ROWID)
+                FROM {table}
+                GROUP BY id
+            )
+        """)
+        con.commit()
+        print("Duplicate records removed.")
+
+
+    def get_record(self, table, Id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"SELECT * FROM {table} WHERE id = ?", (Id,))
+        duplicate_ids = cur.fetchall()
+
+        return duplicate_ids
+
+    def remove_record(self, table, Id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"SELECT * FROM {table} WHERE id = ?", (Id,))
+
+        cur.execute(f"DELETE FROM {table} WHERE id = ?", (Id,))
+        con.commit()
+        print("Record deleted successfully.")
+
+
+    def remove_one_record(self, table, column, Id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+        cur.execute(f"UPDATE {table} SET {column} = NULL WHERE id = ?", (Id,))
+
+        con.commit()
+        print(f"Item '{column}' for ID '{table}' removed successfully.")
+
+        con.close()
+
+    import sqlite3
+
+    def add_or_chinge_item_by_id(self, table, column, item_value, id):
+        import sqlite3
+        con = sqlite3.connect('Gym.db')
+        cur = con.cursor()
+
+        cur.execute(f"UPDATE {table} SET {column} = ? WHERE id = ?", (item_value, id))
+        con.commit()
+
+        print(f"Item '{column}' with value '{item_value}' added successfully for customer ID '{id}'.")
+
+        con.close()
+
+
+
+    # def return_like_instance(self, class_instance, table, id):
     #     import sqlite3
+    #     con = sqlite3.connect('Gym.db')
+    #     cur = con.cursor()
+    #     cur.execute(f"SELECT id FROM {table} WHERE id = ?", (id,))
+    #     row = cur.fetchone()
+    #     nwe_instance = class_instance.
 
-        # self.cur.execute('INSERT INTO CustomersGym VALUES(name= name, Id= Id, address= address, phone= phone, email= email,'
-        #                  'gender= gender, age= age, height=height, weight= weight, customer_id= customer_id, payment_plan= payment_plan)')
-        # return self.cur.execute("SELECT customer_id FROM CustomersGym WHERE id= Id ")
-
-
-            # self.execute(""" customer VALUES(')""")
-    # def get_information(self):
-def maim():
-    Tabel = SQL3()
-
-    # Tabel.CreateTableCustomersGym()
-
-maim()
-
-# cur.execute("""INSERT INTO customer VALUES
-        # ('Monty Python and the Holy Grail', 1975, 8.2, 'oioij'),
-        # ('And Now for Something Completely Different', 1971, 7.5, 'ouhiuhh')""")
-
-    # con.commit()
-
-
-    # res = cur.execute("SELECT * FROM customer")
-    # print(res.fetchall())

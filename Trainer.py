@@ -4,7 +4,7 @@ from Customer import Customer
 
 class Trainer(Entity):
     Trainer_id = 1
-    def __init__(self, name, Id, address, phone, email, gender, expertise='whte is your expertise'):
+    def __init__(self, name, Id, address, phone, email, gender, expertise=''):
         super().__init__(name, Id, address, phone, email)
         self.__gender = gender
         self.__expertise = expertise

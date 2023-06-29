@@ -2,7 +2,8 @@ from SQLconection import SQL3
 from Entity import Entity
 from Customer import Customer
 
-class CustomerManager:
+class CustomersManager:
+    customer_instance = []
 
 
 
@@ -13,28 +14,16 @@ class CustomerManager:
 
 
     def CreateTableCustomersGym(self):
-        import sqlite3
-        con = sqlite3.connect('Gym.db')
-        cur = con.cursor()
+        SQL3.CreateTable(self, 'CustomersGym_nwe', ("name", 'TEXT', 'Id', 'INTEGER',
+                                        'address', 'TEXT', 'phone', 'TEXT',
+                                        'email', 'TEXT', 'gender', 'TEXT', 'age',
+                                        'INTEGER', 'height', 'REAL', 'weight', 'REAL',
+                                        'customer_id', 'INTEGER', 'payment_plan', 'TEXT'))
 
-        try:
-            cur.execute('CREATE TABLE CustomersGym_nwe (name TEXT, Id INTEGER, address TEXT, phone TEXT, email TEXT,'
-                        ' gender TEXT, age INTEGER, height REAL, weight REAL, customer_id INTEGER, payment_plan TEXT)')
-            con.commit()
-        except sqlite3.OperationalError as e:
-            print(e)
 
     def check_id_exists(self, id):
-        import sqlite3
-        con = sqlite3.connect('Gym.db')
-        cur = con.cursor()
-        cur.execute("SELECT id FROM CustomersGym_nwe WHERE id = ?", (id,))
-        row = cur.fetchone()
+        SQL3.check_id_exists(self, 'CustomersGym_nwe', id)
 
-        if row is not None:
-            return True
-        else:
-            return False
 
     def add_customer(self, name, Id, address, phone, email, gender, age=0, height=0, weight=0):
         new_customer = Customer(name, Id, address, phone, email, gender, age, height, weight)
@@ -58,44 +47,22 @@ class CustomerManager:
             print("ID already exists in the table.")
             return None
 
+    def add__or_chinge_Nwe_item_by_id(self,  column, item_value, id):
+        SQL3.add_or_chinge_item_by_id(self, 'CustomersGym_nwe', column, item_value, id)
+
+
     def display_customers(self):
-        import sqlite3
-        con = sqlite3.connect('Gym.db')
-        cur = con.cursor()
-        cur.execute("SELECT * FROM CustomersGym_nwe")
-        rows = cur.fetchall()
-
-        for row in rows:
-            print(row)
-
-    def remove_duplicate_records(self):
-        import sqlite3
-        con = sqlite3.connect('Gym.db')
-        cur = con.cursor()
-        cur.execute("SELECT id, COUNT(*) FROM CustomersGym_nwe GROUP BY id HAVING COUNT(*) > 1")
-        duplicate_ids = cur.fetchall()
+        SQL3.display_records(self, 'CustomersGym_nwe')
 
 
-        cur.execute("""
-            DELETE FROM CustomersGym_nwe
-            WHERE ROWID NOT IN (
-                SELECT MIN(ROWID)
-                FROM CustomersGym_nwe
-                GROUP BY id
-            )
-        """)
-        con.commit()
-        print("Duplicate records removed.")
+    def remove_duplicate_customers(self):
+        SQL3.remove_duplicate_records(self, 'CustomersGym_nwe')
+
 
 
     def get_customer_record(self, Id):
-        import sqlite3
-        con = sqlite3.connect('Gym.db')
-        cur = con.cursor()
-        cur.execute("SELECT * FROM CustomersGym_nwe WHERE id = ?", (Id,))
-        duplicate_ids = cur.fetchall()
+        SQL3.get_record(self, 'CustomersGym_nwe', Id)
 
-        return duplicate_ids
 
     def remove_customer_record(self, Id):
         import sqlite3
@@ -108,17 +75,28 @@ class CustomerManager:
         print("Record deleted successfully.")
 
 
+    def remove_one_customer_record(self,column, Id):
+        SQL3.remove_one_record(self, 'CustomersGym_nwe', column, Id)
+
+
+    # def print_customer_instance(self, item):
+    #     for elem in CustomersManager.customer_instance:
+    #         print(elem.)
+
+
 
 def main():
     if __name__ == '__main__':
-        manager = CustomerManager()
-        # manager.CreateTableCustomersGym()
+        manager = CustomersManager()
+        manager.CreateTableCustomersGym()
         # print(manager.add_customer('omer', 200739977, 'ben nun 2', '0506857162', 'r6720441@mail.com,', 'mail'))
         # manager.display_customers()
         # manager.check_id_exists(200739977)
-        # manager.remove_duplicate_records()
+        manager.remove_duplicate_customers()
         # print(manager.get_customer_record(200739977))
-        manager.remove_customer_record(200739977)
+        # manager.remove_customer_record(200739977)
+        manager.remove_one_customer_record('name', 200739977)
+        manager.add__or_chinge_Nwe_item_by_id('name', 'moshe', 200739977)
         manager.display_customers()
 
 main()

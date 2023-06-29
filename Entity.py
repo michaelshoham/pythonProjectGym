@@ -6,7 +6,7 @@ class Entity:
         self.__email = email
         self.__address = address
         self.__phone = phone
-        self.__another_phone = [phone]
+        self.__another_phone = ''
 
 
 
@@ -55,8 +55,8 @@ class Entity:
         return self.__another_phone
 
     @another_phone.setter
-    def another_phone(self, nwe_phone):
-        self.__another_phone = self.__another_phon.append(nwe_phone)
+    def another_phone(self, another_phone):
+        self.__another_phone = another_phone
 
     def print_data(self):
         print('name:', self.name, '\t\t' 'id:', self.id, '\t\t' 'address:',
