@@ -18,7 +18,7 @@ class SQL3:
                 cur.execute(f'CREATE TABLE {table} {my_tuple}')
                 con.commit()
             except sqlite3.OperationalError as e:
-                print(e)
+                print(e, 'this is a problem')
 
 
     def check_id_exists(self, table, id):

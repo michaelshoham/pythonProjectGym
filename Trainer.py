@@ -8,8 +8,9 @@ class Trainer(Entity):
         super().__init__(name, Id, address, phone, email)
         self.__gender = gender
         self.__expertise = expertise
-        self._trainer_id = Trainer.trainer_id
+        self.__trainer_id = Trainer.Trainer_id
         Trainer.Trainer_id += 1
+        self.__properties = {}
 
 
     @property

@@ -7,7 +7,25 @@ class Entity:
         self.__address = address
         self.__phone = phone
         self.__another_phone = ''
+        self.__properties = {}
 
+    def add_property(self, name, value):
+        self.__properties[name] = value
+
+    def get_property(self, name):
+        return self.__properties.get(name)
+
+    def set_property(self, name, value):
+        if name in self.__properties:
+            self.__properties[name] = value
+        else:
+            print("Property does not exist.")
+
+    def remove_property(self, name):
+        if name in self.__properties:
+            del self.__properties[name]
+        else:
+            print("Property does not exist.")
 
 
     @property
@@ -15,7 +33,7 @@ class Entity:
         return self.__name
 
     @name.setter
-    def _name(self, nwe_name):
+    def name(self, nwe_name):
         self.__name = nwe_name
 
     @property

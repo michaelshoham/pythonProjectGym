@@ -1,24 +1,40 @@
-class FitnessEquipment:
-    def __init__(self, equipment_id, name):
-        self._equipment_id = equipment_id
-        self._name = name
-        self._availability = True
+from Entity import Entity
+class GymEquipment(Entity):
 
-    def get_equipment_id(self):
-        return self._equipment_id
+    Equipment_id = 1
 
-    def set_equipment_id(self, equipment_id):
-        self._equipment_id = equipment_id
+    def __init__(self, name, Id, brand, assignment):
+        super().__init__(name, Id, None, None, None)
+        self.__equipment_id = GymEquipment.Equipment_id
+        GymEquipment.Equipment_id += 1
+        self.__brand = brand
+        self.__assignment = assignment
+        self.__properties = {}
 
-    def get_name(self):
-        return self._name
 
-    def set_name(self, name):
-        self._name = name
 
-    def check_availability(self):
-        return self._availability
+    @property
+    def equipment_id(self):
+        return self.__equipment_id
 
-    def set_availability(self, is_available):
-        self._availability = is_available
+    @property
+    def brand(self):
+        return self.__brand
+
+    @brand.setter
+    def brand(self, get_brand):
+        print('this is a brand setter')
+        self.__brand = get_brand
+
+    @property
+    def assignment(self):
+        return self.__assignment
+
+    @assignment.setter
+    def assignment(self, get_assignment):
+        print('this is a assignment setter')
+        self.__assignment = get_assignment
+
+
+
 
