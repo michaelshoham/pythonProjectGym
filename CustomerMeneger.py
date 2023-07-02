@@ -14,66 +14,73 @@ class CustomersManager:
 
 
     def CreateTableCustomersGym(self):
-        SQL3.CreateTable(self, 'CustomersGym_nwe', ("name", 'TEXT', 'Id', 'INTEGER',
-                                                    'address', 'TEXT', 'phone', 'TEXT',
-                                                    'email', 'TEXT', 'gender', 'TEXT', 'age',
-                                                    'INTEGER', 'height', 'REAL', 'weight', 'REAL',
-                                                    'customer_id', 'INTEGER', 'payment_plan', 'TEXT'))
+        SQL3.CreateTable(self, 'CustomersGym', ('row_id INTEGER PRIMARY KEY AUTOINCREMENT,'
+                                                ' name TEXT, ID INTEGER,'
+                                                ' address TEXT,'
+                                                ' phone TEXT, '
+                                                ' email TEXT, '
+                                                ' gender TEXT, '
+                                                ' age INTEGER,'
+                                                ' height INTEGER,'
+                                                ' weight INTEGER,'
+                                                ' payment_plan TEXT'))
 
 
-    def check_id_exists(self, id):
-        return SQL3.check_id_exists(self, 'CustomersGym_nwe', id)
+
+    def check_id_exists(self, ID):
+        return SQL3.check_id_exists(self, 'CustomersGym', ID)
 
 
-    def add_customer(self, name, Id, address, phone, email, gender, age=0, height=0, weight=0):
-        new_customer = Customer(name, Id, address, phone, email, gender, age, height, weight)
+    def add_customer(self, name, ID, address, phone, email, gender, age=0, height=0, weight=0):
+        new_customer = Customer(name, ID, address, phone, email, gender, age, height, weight)
 
-        if not self.check_id_exists(Id):
+        if not self.check_id_exists(ID):
             import sqlite3
             con = sqlite3.connect('Gym.db')
             cur = con.cursor()
-            cur.execute(
-                'INSERT INTO CustomersGym_nwe (name, id, address,'
-                ' phone, email, gender, age, height, weight,'
-                ' customer_id, payment_plan) '
-                'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                (new_customer.name, new_customer.id, new_customer.address
+            cur.execute('''
+                INSERT INTO CustomersGym (name, address,
+                 phone, email, gender, age, height, weight,
+                 ID, payment_plan) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                (new_customer.name, new_customer.address
                  , new_customer.phone, new_customer.email,
                  new_customer.gender, new_customer.age,
                  new_customer.height, new_customer.weight,
-                 new_customer.customer_id, new_customer.payment_plan))
+                 new_customer.id, new_customer.payment_plan))
             con.commit()
-            cur.execute("SELECT customer_id FROM CustomersGym_nwe WHERE id = ?", (Id,))
+            cur.execute("SELECT row_id FROM CustomersGym WHERE ID = ?", (ID,))
             CustomersManager.customer_instance.append(new_customer)
             return cur.fetchone()
         else:
             print("ID already exists in the table.")
             return None
 
+
     def add__or_chinge_Nwe_item_by_id(self,  column, item_value, id):
-        SQL3.add_or_chinge_item_by_id(self, 'CustomersGym_nwe', column, item_value, id)
+        SQL3.add_or_chinge_item_by_id(self, 'CustomersGym', column, item_value, id)
 
 
     def display_customers(self):
-        SQL3.display_records(self, 'CustomersGym_nwe')
+        SQL3.display_records(self, 'CustomersGym')
 
 
     def remove_duplicate_customers(self):
-        SQL3.remove_duplicate_records(self, 'CustomersGym_nwe')
+        SQL3.remove_duplicate_records(self, 'CustomersGym')
 
 
 
     def get_customer_record(self, Id):
-        SQL3.get_record(self, 'CustomersGym_nwe', Id)
+        SQL3.get_record(self, 'CustomersGym', Id)
 
 
     def remove_customer_record(self, Id):
-        SQL3.remove_record(self, 'CustomersGym_nwe', Id)
+        SQL3.remove_record(self, 'CustomersGym', Id)
 
 
 
     def remove_one_customer_record(self,column, Id):
-        SQL3.remove_one_record(self, 'CustomersGym_nwe', column, Id)
+        SQL3.remove_one_record(self, 'CustomersGym', column, Id)
 
 
     def print_customer_instance(self):
@@ -89,9 +96,13 @@ def main():
     if __name__ == '__main__':
         manager = CustomersManager()
         manager.CreateTableCustomersGym()
-        print(manager.add_customer('omer', 200739977, 'ben nun 2', '0506857162', 'r6720441@mail.com,', 'mail'))
+        print(manager.add_customer('omer', 200739977, 'ben nun 2', '0506857162',
+                                   'r6720441@mail.com,', 'mail'))
+        print(manager.add_customer('moshe', 200739999, 'ben nun 4', '0506957162',
+                                   'r67204481@mail.com,', 'fmail'))
+        manager.add_customer('michael', 308094556, 'trumpeldor 59', '0506720441', 'ruth@gmail.com', 'female')
         manager.display_customers()
-        # manager.check_id_exists(200739977)
+        manager.check_id_exists(200739977)
         # manager.remove_duplicate_customers()
         # print(manager.get_customer_record(200739977))
         # manager.remove_customer_record(200739977)
@@ -100,4 +111,4 @@ def main():
         # manager.display_customers()
         # manager.print_customer_instance()
 
-# main()
+main()

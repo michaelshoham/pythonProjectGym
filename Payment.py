@@ -1,5 +1,11 @@
 class Payment:
-    def calculate_fee(self, customer):
+
+    def __init__(self):
+        pass
+
+
+
+    def calculate_fee(self, customer_Id):
         if isinstance(customer, RegularCustomer):
             return 50
         elif isinstance(customer, PremiumCustomer):

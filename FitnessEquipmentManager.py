@@ -33,31 +33,30 @@ class FitnessEquipmentManager:
 
 
     def CreateTableEquipmentGym(self):
-        SQL3.CreateTable(self, 'EquipmentGym_nwe', ('equipment_id INTEGER',
-                                                    'Equipment_name TEXT',
-                                                    'Equipment_brand TEXT',
-                                                    'Equipment_assignment TEXT',
-                                                    'equipment_id_fk INTEGER'))
+        SQL3.CreateTable(self, 'EquipmentGym', ('Id',
+                                                'Equipment_name',
+                                                'Equipment_brand',
+                                                'Equipment_assignment',
+                                                'equipment_id'))
 
-    def add_equipment(self, name, Id, brand, assignment):
-        new_equipment = GymEquipment(name, Id, brand, assignment)
+    def add_equipment(self, Equipment_name, Id, Equipment_brand, assignment):
+        new_equipment = GymEquipment(Equipment_name, Id, Equipment_brand, assignment)
+        FitnessEquipmentManager.Fitness_instance.append(new_equipment)
 
 
         import sqlite3
         con = sqlite3.connect('Gym.db')
         cur = con.cursor()
         cur.execute(
-            'INSERT INTO EquipmentGym_nwe (equipment_id,'
+            'INSERT INTO EquipmentGym (Id,'
             ' Equipment_name, Equipment_brand,'
-            ' Equipment_assignment, equipment_id_fk) VALUES '
+            ' Equipment_assignment, equipment_id) VALUES '
             '(?, ?, ?, ?, ?)',
             (new_equipment.equipment_id, new_equipment.name, new_equipment.id, new_equipment.brand,
              new_equipment.assignment))
 
         con.commit()
-        cur.execute("SELECT equipment_id FROM EquipmentGym WHERE equipment_id = ?",
-                    (new_equipment.equipment_id))
-        FitnessEquipmentManager.Fitness_instance.append(new_equipment)
+
         return cur.fetchone()
 
 
@@ -76,18 +75,18 @@ class FitnessEquipmentManager:
         SQL3.get_record(self, 'EquipmentGym', equipment_id)
 
 
-    def remove_customer_record(self, equipment_id):
+    def remove_equipment_record(self, equipment_id):
         SQL3.remove_record(self, 'EquipmentGym', equipment_id)
 
 
 
-    def remove_one_customer_record(self,column, equipment_id):
+    def remove_one_equipment_record(self,column, equipment_id):
         SQL3.remove_one_record(self, 'EquipmentGym', column, equipment_id)
 
 
-    def print_customer_instance(self):
+    def print_equipment_instance(self):
         for instance in FitnessEquipmentManager.Fitness_instance:
-            print(instance.equipment_id, instance.name, instance.Id,
+            print(instance.equipment_id, instance.name, instance.id,
                   instance.brand, instance.assignment)
 
 
@@ -109,10 +108,13 @@ class FitnessEquipmentManager:
 
 def main():
     manager = FitnessEquipmentManager()
-    manager.CreateTableEquipmentGym()
+    # manager.CreateTableEquipmentGym()
     manager.display_equipment()
-    result = manager.add_equipment('blake', 555, 'cat', 'dumbbells')
-    print(result)
+    # result = manager.add_equipment('blake', 555, 'cat', 'dumbbells')
+    # print(result)
+    manager.print_equipment_instance()
+    print(FitnessEquipmentManager.Fitness_instance)
+    manager.remove_equipment_record(1)
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()

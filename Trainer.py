@@ -8,10 +8,20 @@ class Trainer(Entity):
         super().__init__(name, Id, address, phone, email)
         self.__gender = gender
         self.__expertise = expertise
+        self.__gender = gender
         self.__trainer_id = Trainer.Trainer_id
         Trainer.Trainer_id += 1
         self.__properties = {}
 
+
+    @property
+    def gender(self):
+        return self.__gender
+
+    @gender.setter
+    def gender(self, new_gender):
+        print('this is a gender setter')
+        self.__gender = new_gender
 
     @property
     def expertise(self):

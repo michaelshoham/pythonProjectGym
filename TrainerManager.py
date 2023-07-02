@@ -11,10 +11,10 @@ class TreinerManager:
 
 
     def CreateTableTrainersGym(self):
-        SQL3.CreateTable(self, 'Trainers_Gym', ('name', 'TEXT', 'Id', 'INTEGER',
-                                                'address', 'TEXT', 'phone', 'TEXT',
-                                                'email', 'TEXT', 'gender', 'TEXT', 'expertise',
-                                                'TEXT', 'trainer_id', 'TEXT'))
+        SQL3.CreateTable(self, 'Trainers_Gym', ('name', 'Id',
+                                                'address', 'phone',
+                                                'email', 'gender', 'expertise',
+                                                'trainer_id'))
 
 
 
@@ -30,43 +30,48 @@ class TreinerManager:
             import sqlite3
             con = sqlite3.connect('Gym.db')
             cur = con.cursor()
-            cur.execute(
-                'INSERT INTO Trainers_Gym (name, id, address,'
-                ' phone, email, gender, age, expertise) '
-                'VALUES (?, ?, ?, ?, ?, ?, ?, ?,)',
-                (new_trainer.name, new_trainer.id, new_trainer.address, new_trainer.phone, new_trainer.email,
-                 new_trainer.gender, new_trainer.expertise))
+            cur.execute(''' 
+            INSERT INTO Trainers_Gym 
+            (name, id, address,
+            phone, email, gender, expertise, Trainer_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+             ''', (new_trainer.name, new_trainer.id, new_trainer.address, new_trainer.phone,
+            new_trainer.email, new_trainer.gender, new_trainer.expertise, new_trainer.Trainer_id))
             con.commit()
-            cur.execute("SELECT customer_id FROM Trainers_Gym WHERE id = ?", (Id,))
+
+            cur.execute("SELECT Trainer_id FROM Trainers_Gym WHERE id = ?", (Id,))
+
             TreinerManager.trainers_lst.append(new_trainer)
+            print('the instance of trainer added to the table')
             return cur.fetchone()
+
         else:
             print("ID already exists in the table.")
             return None
 
     def display_trainers(self):
-        SQL3.display_records(self, 'TrainersGym')
+        SQL3.display_records(self, 'Trainers_Gym')
 
 
     def remove_duplicate_records(self):
-        SQL3.remove_duplicate_records(self, 'TrainersGym')
+        SQL3.remove_duplicate_records(self, 'Trainers_Gym')
 
 
     def add__or_chinge_Nwe_item_by_id(self,  column, item_value, id):
-        SQL3.add_or_chinge_item_by_id(self, 'TrainersGym', column, item_value, id)
+        SQL3.add_or_chinge_item_by_id(self, 'Trainers_Gym', column, item_value, id)
 
 
     def get_trainer_record(self, Id):
-        SQL3.get_record(self, 'TrainersGym', Id)
+        SQL3.get_record(self, 'Trainers_Gym', Id)
 
 
 
     def remove_trainer_record(self, Id):
-        SQL3.remove_record(self, 'TrainersGym', Id)
+        SQL3.remove_record(self, 'Trainers_Gym', Id)
 
 
     def remove_one_trainer_record(self,column, Id):
-        SQL3.remove_one_record(self, 'TrainersGym', column, Id)
+        SQL3.remove_one_record(self, 'Trainers_Gym', column, Id)
 
 
     def print_customer_instance(self):
@@ -79,6 +84,8 @@ class TreinerManager:
 def main():
     manager = TreinerManager()
     manager.CreateTableTrainersGym()
-    # manager.add_trainer('name', 22, 'address', 'phone', 'email', 'gender', 'expertise')
+    manager.add_trainer('name', 22, 'address', 'phone', 'email', 'gender', 'expertise')
+    print(manager.add_trainer('moshe', 200739999, 'ben nun 4', '0506957162',
+                               'r67204481@mail.com,', 'fmail', 'yoga'))
 
 main()

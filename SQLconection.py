@@ -15,17 +15,17 @@ class SQL3:
             cur = con.cursor()
 
             try:
-                cur.execute(f'CREATE TABLE {table} {my_tuple}')
+                cur.execute(f'CREATE TABLE {table} ({my_tuple})')
                 con.commit()
             except sqlite3.OperationalError as e:
                 print(e, 'this is a problem')
 
 
-    def check_id_exists(self, table, id):
+    def check_id_exists(self, table, ID):
         import sqlite3
         con = sqlite3.connect('Gym.db')
         cur = con.cursor()
-        cur.execute(f"SELECT id FROM {table} WHERE id = ?", (id,))
+        cur.execute(f"SELECT ID FROM {table} WHERE id = ?", (ID,))
         row = cur.fetchone()
 
         if row is not None:
@@ -119,3 +119,7 @@ class SQL3:
     #     row = cur.fetchone()
     #     nwe_instance = class_instance.
 
+def main():
+    a = SQL3
+if __name__ == '__main__':
+    main()

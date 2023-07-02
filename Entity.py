@@ -83,11 +83,11 @@ class Entity:
 
 
 def main():
-    be_a_nunja = Entity('be_a_nunja', 200739977, 'begin', '0502626201', 'r@.com')
-    be_a_nunja.print_data()
-    print(be_a_nunja.address)
-    be_a_nunja.address = 'menachem begin'
-    be_a_nunja.print_data()
+    be_a_ninja = Entity('be_a_nunja', 200739977, 'begin', '0502626201', 'r@.com')
+    be_a_ninja.print_data()
+    print(be_a_ninja.address)
+    be_a_ninja.address = 'menachem begin'
+    be_a_ninja.print_data()
 
 # main()
 
