@@ -1,47 +1,60 @@
 class TrainingLesson:
-    def __init__(self, lesson_id, name, time, capacity):
-        self._lesson_id = lesson_id
-        self._name = name
-        self._time = time
-        self._capacity = capacity
-        self._enrolled_customers = []
+    Lesson_id = 1
+    def __init__(self, name, time, capacity):
+        self.__lesson_id = TrainingLesson.Lesson_id
+        TrainingLesson.Lesson_id += 1
+        self.__name = name
+        self.__time = time
+        self.__capacity = capacity
 
-    def get_lesson_id(self):
-        return self._lesson_id
 
-    def set_lesson_id(self, lesson_id):
-        self._lesson_id = lesson_id
+    @property
+    def lesson_id(self):
+        return self.__lesson_id
 
-    def get_name(self):
-        return self._name
+    @lesson_id.setter
+    def lesson_id(self, nwe_lesson_id):
+        self.lesson_id = nwe_lesson_id
 
-    def set_name(self, name):
-        self._name = name
 
-    def get_time(self):
-        return self._time
+    @property
+    def name(self):
+        return self.__name
 
-    def set_time(self, time):
-        self._time = time
+    @name.setter
+    def name(self, nwe_name):
+        self.__name = nwe_name
 
-    def get_capacity(self):
-        return self._capacity
 
-    def set_capacity(self, capacity):
-        self._capacity = capacity
+    @property
+    def time(self):
+        return self.__time
 
-    def enroll_customer(self, customer):
-        if len(self._enrolled_customers) < self._capacity:
-            self._enrolled_customers.append(customer)
-            print(f"Customer {customer.get_name()} enrolled in the {self._name} lesson.")
-        else:
-            print(f"The {self._name} lesson is already full. Customer {customer.get_name()} cannot enroll.")
+    @time.setter
+    def time(self, time):
+        self.__time = time
+    @property
+    def capacity(self):
+        return self.__capacity
+    @capacity.setter
+    def capacity(self, capacity):
+        self.__capacity = capacity
+
+    @property
+    def enrolled_customer(self):
+        return self.__enrolled_customers
+
+    @enrolled_customer.setter
+    def enrolled_customer(self, new_enrolled_customer):
+         self.__enrolled_customer = new_enrolled_customer
+
+
 
     def display_details(self):
-        print(f"Lesson: {self._name}")
-        print(f"Time: {self._time}")
-        print(f"Capacity: {len(self._enrolled_customers)}/{self._capacity}")
+        print(f"Lesson: {self.name}")
+        print(f"Time: {self.time}")
+        print(f"Capacity: {len(self.enrolled_customers)}/{self.capacity}")
         print("Enrolled Customers:")
-        for customer in self._enrolled_customers:
-            print(f"- {customer.get_name()}")
+        for customer in self.enrolled_customers:
+            print(f"- {customer.name()}")
 
